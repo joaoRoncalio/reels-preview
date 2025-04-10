@@ -40,7 +40,7 @@ Todos os comandos são executados a partir da raiz do projeto, em um terminal:
 
 ## 📝 Licença
 
-Este projeto está sob a licença MIT.
+Este projeto está sob a licença GPL-3.0. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
 
 ## 👨‍💻 Desenvolvido por
 
