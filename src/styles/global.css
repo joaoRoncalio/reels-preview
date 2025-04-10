@@ -296,7 +296,7 @@ body {
 
 .preview-text {
   color: white;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   text-align: center;
   flex-grow: 1;
@@ -314,12 +314,12 @@ body {
 .right-icons {
   position: absolute;
   right: 16px;
-  bottom: 200px;
+  bottom: 210px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px; /* Espaçamento entre os ícones conforme a imagem */
-  z-index: 3;
+  z-index: 10;
 }
 
 .icon-placeholder {
@@ -328,19 +328,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 65%;
 }
 
 /* Ícone de três pontos - posicionado conforme a imagem */
 .three-dots {
   position: absolute;
   right: 16px;
-  bottom: 140px; /* Ajustado conforme a imagem */
+  bottom: 150px; /* Ajustado conforme a imagem */
   width: 28px;
   height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 4;
+  opacity: 65%;
 }
 
 /* Informações do usuário */
@@ -353,6 +355,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 5px;
+  opacity: 65%;
 }
 
 .profile-pic-container {
@@ -380,6 +383,7 @@ body {
 
 /* Área da legenda */
 .caption-container {
+  align-self: flex-start;
   z-index: 4;
 }
 
