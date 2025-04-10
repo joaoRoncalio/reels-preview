@@ -158,13 +158,13 @@ body {
 
 .video-element {
   position: absolute;
-  align-self: stretch;
+  transform: translateX(-50%);
   top: 0;
-  left: 0;
+  left: 50%;
   bottom: 94px;
-  width: 100%;
-  height: auto;
-  max-height: 100%;
+  width: auto;
+  height: calc(100% - 83px);
+  max-height: calc(100% - 83px);
   object-fit: cover; /* Garante que o vídeo preencha todo o espaço */
   object-position: top;
   display: none; /* Escondido por padrão, mostrado quando o vídeo é carregado */
@@ -219,9 +219,6 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  height: 94px; /* Altura da barra preta inferior */
-  background-color: #000;
   z-index: 2;
 }
 
@@ -316,7 +313,7 @@ body {
 .right-icons {
   position: absolute;
   right: 16px;
-  bottom: 180px;
+  bottom: 165px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -337,7 +334,7 @@ body {
 .three-dots {
   position: absolute;
   right: 16px;
-  bottom: 110px; /* Ajustado conforme a imagem */
+  bottom: 120px; /* Ajustado conforme a imagem */
   width: 28px;
   height: 28px;
   display: flex;
@@ -350,8 +347,8 @@ body {
 /* Informações do usuário */
 .user-info-container {
   position: absolute;
-  bottom: 111px; /* Ajustado conforme a imagem */
-  left: 14px;
+  bottom: 124px; /* Ajustado conforme a imagem */
+  left: 16px;
   z-index: 4;
   display: flex;
   flex-direction: column;
