@@ -1,0 +1,391 @@
+/* Reset e estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 2rem 1rem;
+}
+
+/* Estilos do container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos do cabeçalho */
+.header {
+  max-width: 40ch;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    max-width: 32ch;
+  }
+}
+
+.header h1 {
+  line-height: 1;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #666;
+  max-width: 600px;
+}
+
+/* Estilos do botão */
+.button {
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #0074cc;
+}
+
+.button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Estilos do frame do iPhone */
+.device-preview {
+  margin-top: 2rem;
+  position: relative;
+  width: 100%;
+  max-width: 393px; /* Ajuste conforme necessário */
+}
+
+/* Frame do iPhone */
+.device-frame {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* Tela do dispositivo (conteúdo) */
+.device-screen {
+  position: absolute;
+  top: 24px; /* Ajustado com precisão para alinhar com o frame */
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  border-radius: 40px; /* Arredondamento da tela */
+  overflow: hidden;
+  z-index: 0;
+  background-color: #1a1a1a; /* Fundo escuro para a tela */
+}
+
+.video-overlay {
+  position: absolute;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 35%
+  );
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Container do vídeo - agora ocupa toda a altura */
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Alterado para ocupar toda a altura */
+  overflow: hidden;
+}
+
+.video-element {
+  position: absolute;
+  align-self: stretch;
+  top: 0;
+  left: 0;
+  bottom: 94px;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: cover; /* Garante que o vídeo preencha todo o espaço */
+  object-position: top;
+  display: none; /* Escondido por padrão, mostrado quando o vídeo é carregado */
+}
+
+.placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a; /* Fundo escuro para o placeholder */
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Estilos da sobreposição da UI do Instagram */
+.instagram-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Torna a sobreposição não interativa */
+  z-index: 2;
+}
+
+/* Barra superior preta do Instagram */
+.instagram-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px; /* Altura da barra preta superior */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 80%
+  );
+  z-index: 2;
+}
+
+/* Barra inferior preta do Instagram */
+.instagram-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 94px; /* Altura da barra preta inferior */
+  background-color: #000;
+  z-index: 2;
+}
+
+/* Barra de progresso do Story */
+.story-progress {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  display: flex;
+  justify-content: center;
+  z-index: 4;
+}
+
+.progress-bar {
+  width: 134px;
+  height: 100%;
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* Barra de status do iOS - ajustada conforme a imagem de referência */
+.ios-status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px 0 40px;
+  z-index: 3;
+}
+
+.status-time {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 12px; /* Ajustado conforme a imagem */
+  margin-left: 5px; /* Ajustado conforme a imagem */
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 12px; /* Ajustado conforme a imagem */
+  margin-right: 5px; /* Ajustado conforme a imagem */
+}
+
+/* Navegação do Instagram - ajustada conforme a imagem */
+.instagram-header {
+  position: absolute;
+  top: 44px; /* Logo abaixo da barra de status do iOS */
+  left: 0;
+  width: 100%;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px 0 12px;
+  z-index: 3;
+}
+
+.nav-arrow {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-text {
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.camera-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ícones do lado direito - posicionados conforme a imagem de referência */
+.right-icons {
+  position: absolute;
+  right: 16px;
+  bottom: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px; /* Espaçamento entre os ícones conforme a imagem */
+  z-index: 3;
+}
+
+.icon-placeholder {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ícone de três pontos - posicionado conforme a imagem */
+.three-dots {
+  position: absolute;
+  right: 16px;
+  bottom: 140px; /* Ajustado conforme a imagem */
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+/* Informações do usuário */
+.user-info-container {
+  position: absolute;
+  bottom: 111px; /* Ajustado conforme a imagem */
+  left: 14px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-pic-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.username {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Área da legenda */
+.caption-container {
+  z-index: 4;
+}
+
+.caption {
+  color: white;
+  font-size: 14px;
+}
+
+/* Estilos para o footer */
+.footer {
+  letter-spacing: -0.01em;
+  margin-top: 2rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.footer-text {
+  opacity: 0.8;
+}
+
+.footer-link {
+  color: #0095f6;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #0074cc;
+  text-decoration: underline;
+}

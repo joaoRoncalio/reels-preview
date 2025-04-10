@@ -1,22 +1,31 @@
+---
+import '../styles/global.css';
+
+const {pageTitle} = Astro.props;
+const ogImageUrl = "/images/reels-preview-og-image_tiny.webp";
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
+	<html lang="pt-BR">
+		<head>
+		  <meta charset="utf-8" />
+		  <meta name="viewport" content="width=device-width, initial-scale=1" />
+		  <title>{pageTitle}</title>
+		  <link rel="icon" type="image/svg+xml" href="/images/Favicon.png" />
+		  <meta property="og:title" content={pageTitle} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta
+      property="og:description"
+      content="Veja como seus vídeos ficarão no Instagram Reels antes de publicar."
+    />
+    <meta
+      name="description"
+      content="Veja como seus vídeos ficarão no Instagram Reels antes de publicar."
+    />
+    <meta property="og:site_name" content={pageTitle} />
+		</head>
 	<body>
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
