@@ -2,7 +2,6 @@
 import '../styles/global.css';
 
 const {pageTitle} = Astro.props;
-const ogImageUrl = "/public/images/reels-preview-og-image_tiny.webp";
 ---
 
 <!doctype html>
@@ -14,7 +13,7 @@ const ogImageUrl = "/public/images/reels-preview-og-image_tiny.webp";
 		  <link rel="icon" type="image/svg+xml" href="/images/Favicon.png" />
 		  <meta property="og:title" content={pageTitle} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image" content="/images/reels-preview-og-image_tiny.webp" />
     <meta
       property="og:description"
       content="Veja como seus vídeos ficarão no Instagram Reels antes de publicar."
