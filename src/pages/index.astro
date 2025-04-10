@@ -1,11 +1,552 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Astro component frontmatter (empty for this example)
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prévia do Instagram Reels</title>
+  <style>
+    /* Reset e estilos base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100svh;
+      padding: 2rem 1rem;
+    }
+    
+    /* Estilos do container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 4rem auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    /* Estilos do cabeçalho */
+    .header {
+      max-width: 40ch;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .header {
+        max-width: 32ch;
+      }
+    }
+    
+    .header h1 {
+      line-height: 1;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .header p {
+      color: #666;
+      max-width: 600px;
+    }
+    
+    /* Estilos do botão */
+    .button {
+      background-color: #0095f6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    
+    .button:hover {
+      background-color: #0074cc;
+    }
+    
+    .button svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+    
+    /* Estilos do frame do iPhone */
+    .device-preview {
+      margin-top: 2rem;
+      position: relative;
+      width: 100%;
+      max-width: 393px; /* Ajuste conforme necessário */
+    }
+    
+    /* Frame do iPhone */
+    .device-frame {
+      width: 100%;
+      height: auto;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Tela do dispositivo (conteúdo) */
+    .device-screen {
+      position: absolute;
+      top: 24px; /* Ajustado com precisão para alinhar com o frame */
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      border-radius: 40px; /* Arredondamento da tela */
+      overflow: hidden;
+      z-index: 0;
+      background-color: #1a1a1a; /* Fundo escuro para a tela */
+    }
+    
+    /* Container do vídeo - agora ocupa toda a altura */
+    .video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%; /* Alterado para ocupar toda a altura */
+      overflow: hidden;
+    }
+    
+    .video-element {
+      position: absolute;
+      align-self: stretch;
+      top: 0;
+      left: 0;
+      bottom: 94px;
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: cover; /* Garante que o vídeo preencha todo o espaço */
+      object-position: top;
+      display: none; /* Escondido por padrão, mostrado quando o vídeo é carregado */
+    }
+    
+    .placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #1a1a1a; /* Fundo escuro para o placeholder */
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    /* Estilos da sobreposição da UI do Instagram */
+    .instagram-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Torna a sobreposição não interativa */
+      z-index: 2;
+    }
+    
+    /* Barra superior preta do Instagram */
+    .instagram-top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90px; /* Altura da barra preta superior */
+      background-color: transparent;
+      z-index: 2;
+    }
+    
+    /* Barra inferior preta do Instagram */
+    .instagram-bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 94px; /* Altura da barra preta inferior */
+      background-color: #000;
+      z-index: 2;
+    }
+    
+    /* Barra de progresso do Story */
+    .story-progress {
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      display: flex;
+      justify-content: center;
+      z-index: 4;
+    }
+    
+    .progress-bar {
+      width: 134px;
+      height: 100%;
+      background-color: white;
+      border-radius: 2px;
+    }
+    
+    /* Barra de status do iOS - ajustada conforme a imagem de referência */
+    .ios-status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px 0 40px;
+      z-index: 3;
+    }
+    
+    .status-time {
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 12px; /* Ajustado conforme a imagem */
+      margin-left: 5px; /* Ajustado conforme a imagem */
+    }
+    
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px; /* Ajustado conforme a imagem */
+      margin-right: 5px; /* Ajustado conforme a imagem */
+    }
+    
+    /* Navegação do Instagram - ajustada conforme a imagem */
+    .instagram-header {
+      position: absolute;
+      top: 44px; /* Logo abaixo da barra de status do iOS */
+      left: 0;
+      width: 100%;
+      height: 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px 0 12px;
+      z-index: 3;
+    }
+    
+    .nav-arrow {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .preview-text {
+      color: white;
+      font-size: 17px;
+      font-weight: 600;
+      text-align: center;
+      flex-grow: 1;
+    }
+    
+    .camera-icon {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Ícones do lado direito - posicionados conforme a imagem de referência */
+    .right-icons {
+      position: absolute;
+      right: 16px;
+      bottom: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px; /* Espaçamento entre os ícones conforme a imagem */
+      z-index: 3;
+    }
+    
+    .icon-placeholder {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Ícone de três pontos - posicionado conforme a imagem */
+    .three-dots {
+      position: absolute;
+      right: 16px;
+      bottom: 140px; /* Ajustado conforme a imagem */
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+    }
+    
+    /* Informações do usuário */
+    .user-info-container {
+      position: absolute;
+      bottom: 111px; /* Ajustado conforme a imagem */
+      left: 14px;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .profile-pic-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .profile-pic {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .username {
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    /* Área da legenda */
+    .caption-container {
+      z-index: 4;
+    }
+    
+    .caption {
+      color: white;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Insta Reels Preview</h1>
+      <p>Faça upload de um vídeo para ver como ficaria com a interface do Instagram Reels</p>
+    </div>
+    
+    <button class="button" id="uploadButton">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      Selecionar Vídeo
+    </button>
+    <input type="file" id="videoInput" accept="video/*" style="display: none;" />
+    
+    <div class="device-preview">
+      <!-- Frame do iPhone -->
+      <img src="/images/iPhone 16 - Black - Portrait.png" alt="Frame do iPhone 16" class="device-frame" />
+      
+      <!-- Tela do dispositivo (conteúdo) -->
+      <div class="device-screen">
+        <div class="video-container">
+          <div class="placeholder" id="placeholder">
+            Selecione seu vídeo para vê-lo aqui
+          </div>
+          <video class="video-element" id="videoPlayer"></video>
+        </div>
+        
+        <!-- Barra preta superior -->
+        <div class="instagram-top-bar"></div>
+        
+        <!-- Barra preta inferior -->
+        <div class="instagram-bottom-bar"></div>
+        
+        <!-- Sobreposição da UI do Instagram -->
+        <div class="instagram-overlay">
+          <!-- Barra de status do iOS -->
+          <div class="ios-status-bar">
+            <div class="status-time">9:41</div>
+            <div class="status-icons">
+              <!-- Ícone de sinal celular -->
+              <div class="signal-icon">
+                <svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M20.116 2.03295C20.116 1.3999 19.6385 0.886719 19.0493 0.886719H17.9827C17.3936 0.886719 16.916 1.3999 16.916 2.03295V11.9669C16.916 12.5999 17.3936 13.1131 17.9827 13.1131H19.0493C19.6385 13.1131 20.116 12.5999 20.116 11.9669V2.03295ZM12.6819 3.332H13.7486C14.3377 3.332 14.8152 3.8575 14.8152 4.50574V11.9394C14.8152 12.5876 14.3377 13.1131 13.7486 13.1131H12.6819C12.0928 13.1131 11.6152 12.5876 11.6152 11.9394V4.50574C11.6152 3.8575 12.0928 3.332 12.6819 3.332ZM8.35013 5.98105H7.28346C6.69436 5.98105 6.2168 6.51324 6.2168 7.16973V11.9244C6.2168 12.5809 6.69436 13.1131 7.28346 13.1131H8.35013C8.93923 13.1131 9.4168 12.5809 9.4168 11.9244V7.16973C9.4168 6.51324 8.93923 5.98105 8.35013 5.98105ZM3.04935 8.42634H1.98268C1.39358 8.42634 0.916016 8.95093 0.916016 9.59804V11.9414C0.916016 12.5885 1.39358 13.1131 1.98268 13.1131H3.04935C3.63845 13.1131 4.11602 12.5885 4.11602 11.9414V9.59804C4.11602 8.95093 3.63845 8.42634 3.04935 8.42634Z" fill="white"/>
+                </svg>
+              </div>
+              
+              <!-- Ícone de Wi-Fi -->
+              <div class="wifi-icon">
+                <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.68654 3.30222C11.1736 3.30232 13.5657 4.22441 15.3682 5.87789C15.5039 6.00554 15.7209 6.00393 15.8545 5.87428L17.152 4.61081C17.2197 4.54505 17.2575 4.45597 17.2569 4.36329C17.2563 4.27061 17.2175 4.18197 17.149 4.11697C12.418 -0.257741 4.9543 -0.257741 0.22329 4.11697C0.154758 4.18192 0.115874 4.27054 0.115242 4.36322C0.11461 4.4559 0.152283 4.545 0.219923 4.61081L1.51779 5.87428C1.65139 6.00413 1.86851 6.00574 2.00416 5.87789C3.8069 4.2243 6.19918 3.30221 8.68654 3.30222ZM8.68318 7.5225C10.0405 7.52241 11.3494 8.03415 12.3555 8.95828C12.4916 9.08943 12.7059 9.08659 12.8386 8.95187L14.1259 7.63256C14.1937 7.56336 14.2313 7.46948 14.2303 7.37193C14.2293 7.27438 14.1898 7.1813 14.1207 7.11351C11.0568 4.22266 6.31211 4.22266 3.24828 7.11351C3.17907 7.1813 3.13959 7.27443 3.13868 7.37201C3.13777 7.46959 3.17552 7.56346 3.24345 7.63256L4.53036 8.95187C4.66302 9.08659 4.87738 9.08943 5.01346 8.95828C6.01892 8.03476 7.32676 7.52307 8.68318 7.5225ZM11.2076 10.316C11.2095 10.4214 11.1725 10.523 11.1052 10.5968L8.9285 13.0515C8.8647 13.1236 8.77771 13.1642 8.68694 13.1642C8.59617 13.1642 8.50917 13.1236 8.44537 13.0515L6.26834 10.5968C6.20109 10.5229 6.16409 10.4213 6.16608 10.316C6.16808 10.2106 6.20889 10.1108 6.27887 10.0402C7.66897 8.72634 9.7049 8.72634 11.095 10.0402C11.1649 10.1109 11.2057 10.2107 11.2076 10.316Z" fill="white"/>
+                </svg>
+              </div>
+              
+              <!-- Ícone de bateria -->
+              <div class="battery-container">
+                <svg width="28" height="14" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect opacity="0.35" x="0.755859" y="1" width="24" height="12" rx="3.8" stroke="white"/>
+                  <path opacity="0.4" d="M26.2559 5.28125V9.35672C27.0606 9.01155 27.5839 8.20859 27.5839 7.31899C27.5839 6.42938 27.0606 5.62642 26.2559 5.28125" fill="white"/>
+                  <rect x="2.25586" y="2.5" width="21" height="9" rx="2.5" fill="white"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Cabeçalho do Instagram -->
+          <div class="instagram-header">
+            <div class="nav-arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M15 18l-6-6 6-6"></path>
+              </svg>
+            </div>
+            <div class="preview-text">Ver prévia</div>
+            <div class="camera-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Ícones do lado direito -->
+          <div class="right-icons">
+            <!-- Ícone de curtida -->
+            <div class="icon-placeholder">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.18253 15.0979L13.1459 24.7466C13.6074 25.2434 14.3939 25.2434 14.8554 24.7466L23.8188 15.0979C26.2835 12.4447 26.2835 8.14305 23.8188 5.48988C21.354 2.83671 17.3579 2.83671 14.8932 5.48988L14.8554 5.53057C14.3939 6.0274 13.6074 6.0274 13.1459 5.53057L13.1081 5.48988C10.6434 2.83671 6.64726 2.83671 4.18253 5.48988C1.7178 8.14305 1.7178 12.4447 4.18253 15.0979Z" stroke="white" stroke-opacity="0.65" stroke-width="2.33333"/>
+              </svg>
+            </div>
+            
+            <!-- Ícone de comentário -->
+            <div class="icon-placeholder">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Icons / Comment">
+                  <g id="comment">
+                    <mask id="path-1-outside-1_550_4329" maskUnits="userSpaceOnUse" x="1.66016" y="1.66699" width="25" height="25" fill="black">
+                      <rect fill="white" x="1.66016" y="1.66699" width="25" height="25"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M20.9744 20.2208C22.4463 18.5699 23.3408 16.3931 23.3408 14.0073C23.3408 8.84879 19.159 4.66699 14.0005 4.66699C8.84196 4.66699 4.66016 8.84879 4.66016 14.0073C4.66016 19.1658 8.84196 23.3476 14.0005 23.3476C15.7749 23.3476 17.4338 22.8528 18.8466 21.9936L21.4756 22.5576L20.9744 20.2208Z"/>
+                    </mask>
+                    <path d="M20.9744 20.2208L19.2328 18.668L18.4445 19.5521L18.6929 20.7102L20.9744 20.2208ZM18.8466 21.9936L19.336 19.7122L18.4279 19.5174L17.6343 20L18.8466 21.9936ZM21.4756 22.5576L20.9863 24.839L24.5137 25.5957L23.7571 22.0682L21.4756 22.5576ZM21.0074 14.0073C21.0074 15.7986 20.3383 17.428 19.2328 18.668L22.716 21.7736C24.5543 19.7119 25.6741 16.9876 25.6741 14.0073H21.0074ZM14.0005 7.00033C17.8703 7.00033 21.0074 10.1375 21.0074 14.0073H25.6741C25.6741 7.56013 20.4476 2.33366 14.0005 2.33366V7.00033ZM6.99349 14.0073C6.99349 10.1375 10.1306 7.00033 14.0005 7.00033V2.33366C7.55329 2.33366 2.32682 7.56013 2.32682 14.0073H6.99349ZM14.0005 21.0143C10.1306 21.0143 6.99349 17.8772 6.99349 14.0073H2.32682C2.32682 20.4545 7.55329 25.681 14.0005 25.681V21.0143ZM17.6343 20C16.5764 20.6433 15.3353 21.0143 14.0005 21.0143V25.681C16.2145 25.681 18.2911 25.0623 20.059 23.9873L17.6343 20ZM18.3573 24.2751L20.9863 24.839L21.965 20.2761L19.336 19.7122L18.3573 24.2751ZM23.7571 22.0682L23.2558 19.7314L18.6929 20.7102L19.1942 23.047L23.7571 22.0682Z" fill="white" fill-opacity="0.65" mask="url(#path-1-outside-1_550_4329)"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            
+            <!-- Ícone de compartilhar -->
+            <div class="icon-placeholder">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Icons / Share">
+                  <path id="share" d="M11.6667 14L13.6828 23.0724C13.7971 23.587 14.4812 23.698 14.7524 23.246L23.9699 7.88346C24.2032 7.49465 23.9231 7 23.4697 7H5.0769C4.53533 7 4.28608 7.67378 4.69727 8.02623L11.6667 14ZM11.6667 14L23.3333 7.58333" stroke="white" stroke-opacity="0.65" stroke-width="2.33333"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Ícone de três pontos -->
+          <div class="three-dots">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.0013 16.3337C8.28997 16.3337 9.33464 15.289 9.33464 14.0003C9.33464 12.7117 8.28997 11.667 7.0013 11.667C5.71264 11.667 4.66797 12.7117 4.66797 14.0003C4.66797 15.289 5.71264 16.3337 7.0013 16.3337ZM16.3346 14.0003C16.3346 15.289 15.29 16.3337 14.0013 16.3337C12.7126 16.3337 11.668 15.289 11.668 14.0003C11.668 12.7117 12.7126 11.667 14.0013 11.667C15.29 11.667 16.3346 12.7117 16.3346 14.0003ZM23.3346 14.0003C23.3346 15.289 22.29 16.3337 21.0013 16.3337C19.7126 16.3337 18.668 15.289 18.668 14.0003C18.668 12.7117 19.7126 11.667 21.0013 11.667C22.29 11.667 23.3346 12.7117 23.3346 14.0003Z" fill="white" fill-opacity="0.65"/>
+            </svg>
+          </div>
+          
+          <!-- Informações do usuário -->
+          <div class="user-info-container">
+           <div class="profile-pic-container">
+             <div class="profile-pic">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                 <circle cx="12" cy="7" r="4"></circle>
+               </svg>
+             </div>
+             <div class="username">joao_roncalio</div>
+           </div>
+            <!-- Legenda -->
+            <div class="caption-container">
+              <div class="caption">Legenda</div>
+            </div>
+          </div>
+          
+          
+          <!-- Barra de progresso do Story -->
+          <div class="story-progress">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const uploadButton = document.getElementById('uploadButton');
+      const videoInput = document.getElementById('videoInput');
+      const videoPlayer = document.getElementById('videoPlayer');
+      const placeholder = document.getElementById('placeholder');
+      
+      let currentObjectURL = null;
+      
+      uploadButton.addEventListener('click', () => {
+        videoInput.click();
+      });
+      
+      videoInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        
+        if (file && file.type.startsWith('video/')) {
+          // Revoga a URL do objeto anterior, se existir
+          if (currentObjectURL) {
+            URL.revokeObjectURL(currentObjectURL);
+          }
+          
+          // Cria nova URL do objeto
+          currentObjectURL = URL.createObjectURL(file);
+          
+          // Define a fonte do vídeo e mostra o player
+          videoPlayer.src = currentObjectURL;
+          videoPlayer.style.display = 'block';
+          placeholder.style.display = 'none';
+          
+          // Configurações do vídeo
+          videoPlayer.controls = false; // Remove os controles padrão
+          videoPlayer.muted = true; // Silencia o vídeo por padrão
+          videoPlayer.loop = true; // Faz o vídeo repetir
+          videoPlayer.playsInline = true; // Importante para dispositivos móveis
+          
+          // Reproduz o vídeo
+          videoPlayer.play();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
