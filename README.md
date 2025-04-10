@@ -1,48 +1,47 @@
-# Astro Starter Kit: Basics
+# Insta Reels Preview
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+![Astro Badge](https://img.shields.io/badge/Astro-5.6.1-blueviolet)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 📱 Sobre o Projeto
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+O **Insta Reels Preview** é uma aplicação web que permite visualizar como seus vídeos ficariam na interface do Instagram Reels. Faça upload do seu vídeo e veja-o em uma prévia realista da interface do Instagram.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## 🚀 Funcionalidades
 
-## 🚀 Project Structure
+- Visualização de vídeos em uma interface que simula o Instagram Reels
+- Design responsivo para diferentes dispositivos
+- Interface intuitiva e fácil de usar
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🛠️ Tecnologias Utilizadas
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- [Astro](https://astro.build/) - Framework web rápido e moderno
+- HTML5, CSS3 e JavaScript - Para estrutura, estilo e interatividade
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🧞 Comandos
 
-## 🧞 Commands
+Todos os comandos são executados a partir da raiz do projeto, em um terminal:
 
-All commands are run from the root of the project, from a terminal:
+| Comando                | Ação                                                     |
+| :--------------------- | :------------------------------------------------------- |
+| `pnpm install`         | Instala as dependências                                  |
+| `pnpm dev`             | Inicia o servidor de desenvolvimento em `localhost:4321` |
+| `pnpm build`           | Compila o site para produção em `./dist/`                |
+| `pnpm preview`         | Visualiza localmente a versão compilada                  |
+| `pnpm astro ...`       | Executa comandos CLI como `astro add`, `astro check`     |
+| `pnpm astro -- --help` | Obtém ajuda sobre o uso do CLI do Astro                  |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## 🔧 Como Usar
 
-## 👀 Want to learn more?
+1. Clone este repositório
+2. Instale as dependências com `pnpm install`
+3. Inicie o servidor de desenvolvimento com `pnpm dev`
+4. Acesse `localhost:4321` no seu navegador
+5. Faça upload de um vídeo para ver como ficaria no Instagram Reels
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 📝 Licença
+
+Este projeto está sob a licença MIT.
+
+## 👨‍💻 Desenvolvido por
+
+João Roncalio da [Montefiore Studio](https://montefiorestudio.com)
