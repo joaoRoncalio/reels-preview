@@ -9,14 +9,25 @@ import Layout from '../layouts/Layout.astro';
       <p>Veja como seus vídeos ficarão no Instagram Reels antes de publicar.</p>
     </div>
     
-    <button class="button" id="uploadButton">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="17 8 12 3 7 8"></polyline>
-        <line x1="12" y1="3" x2="12" y2="15"></line>
-      </svg>
-      Selecionar Vídeo
-    </button>
+    <div class="button-container">
+      <button class="button" id="uploadButton">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        Selecionar Vídeo
+      </button>
+      
+      <button class="button button-clear" id="clearButton" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="15" y1="9" x2="9" y2="15"></line>
+          <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
+        Limpar Vídeo
+      </button>
+    </div>
     <input type="file" id="videoInput" accept="video/*" style="display: none;" />
     
     <div class="device-preview">
@@ -136,7 +147,7 @@ import Layout from '../layouts/Layout.astro';
                  <circle cx="12" cy="7" r="4"></circle>
                </svg>
              </div>
-             <div class="username">joao_roncalio</div>
+             <div class="username">seu.instagram</div>
            </div>
             <!-- Legenda -->
             <div class="caption-container">
@@ -164,6 +175,7 @@ import Layout from '../layouts/Layout.astro';
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       const uploadButton = document.getElementById('uploadButton');
+      const clearButton = document.getElementById('clearButton');
       const videoInput = document.getElementById('videoInput');
       const videoPlayer = document.getElementById('videoPlayer');
       const placeholder = document.getElementById('placeholder');
@@ -172,6 +184,27 @@ import Layout from '../layouts/Layout.astro';
       
       uploadButton.addEventListener('click', () => {
         videoInput.click();
+      });
+      
+      clearButton.addEventListener('click', () => {
+        // Limpa o input de arquivo
+        videoInput.value = '';
+        
+        // Revoga a URL do objeto, se existir
+        if (currentObjectURL) {
+          URL.revokeObjectURL(currentObjectURL);
+          currentObjectURL = null;
+        }
+        
+        // Reseta o player de vídeo
+        videoPlayer.src = '';
+        videoPlayer.style.display = 'none';
+        
+        // Mostra o placeholder novamente
+        placeholder.style.display = 'flex';
+        
+        // Esconde o botão de limpar
+        clearButton.style.display = 'none';
       });
       
       videoInput.addEventListener('change', (event) => {
@@ -196,6 +229,9 @@ import Layout from '../layouts/Layout.astro';
           videoPlayer.muted = true; // Silencia o vídeo por padrão
           videoPlayer.loop = true; // Faz o vídeo repetir
           videoPlayer.playsInline = true; // Importante para dispositivos móveis
+          
+          // Mostra o botão de limpar
+          clearButton.style.display = 'flex';
           
           // Reproduz o vídeo
           videoPlayer.play();

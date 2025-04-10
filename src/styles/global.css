@@ -77,6 +77,30 @@ body {
   height: 1.25rem;
 }
 
+/* Container para os botões */
+.button-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+/* Estilo para o botão de limpar */
+.button-clear {
+  background-color: #ff3b30;
+}
+
+.button-clear:hover {
+  background-color: #d63030;
+}
+
 /* Estilos do frame do iPhone */
 .device-preview {
   margin-top: 2rem;
