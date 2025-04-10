@@ -1,4 +1,5 @@
 ---
+import TabBar from '../components/TabBar.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -47,11 +48,11 @@ import Layout from '../layouts/Layout.astro';
         <!-- Barra preta superior -->
         <div class="instagram-top-bar"></div>
         
-        <!-- Barra preta inferior -->
-        <div class="instagram-bottom-bar"></div>
         
         <!-- Sobreposição da UI do Instagram -->
         <div class="instagram-overlay">
+          <!-- Barra preta inferior -->
+         <TabBar class="instagram-bottom-bar" />
           <!-- Barra de status do iOS -->
           <div class="ios-status-bar">
             <div class="status-time">9:41</div>
@@ -155,10 +156,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           
           
-          <!-- Barra de progresso do Story -->
-          <div class="story-progress">
-            <div class="progress-bar"></div>
-          </div>
+         
         </div>
       </div>
     </div>
