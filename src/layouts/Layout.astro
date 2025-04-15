@@ -1,36 +1,45 @@
 ---
-import '../styles/global.css';
-import Analytics from '@vercel/analytics/astro'
+import "../styles/global.css";
+import Analytics from "@vercel/analytics/astro";
 
-const {pageTitle} = Astro.props;
+const { pageTitle } = Astro.props;
 ---
 
 <!doctype html>
-	<html lang="pt-BR">
-		<head>
-      <meta charset="utf-8" />
-		  <meta name="viewport" content="width=device-width, initial-scale=1" />
-		  <title>{pageTitle}</title>
-		  <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
-<link rel="shortcut icon" href="/images/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-<link rel="manifest" href="/images/site.webmanifest" />
-		  <meta property="og:title" content={pageTitle} />
-      <meta property="og:type" content="website" />
-      <meta property="og:image" content="/images/reels-preview-og-image_tiny.webp" />
-      <meta
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="/images/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/images/site.webmanifest" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/reels-preview-ogimage.webp" />
+    <meta
       property="og:description"
       content="Veja como seus vídeos ficarão no Instagram Reels antes de publicar."
-      />
-      <meta
+    />
+    <meta
       name="description"
       content="Veja como seus vídeos ficarão no Instagram Reels antes de publicar."
-      />
-      <meta property="og:site_name" content={pageTitle} />
-		</head>
-    <body>
+    />
+    <meta property="og:site_name" content={pageTitle} />
+  </head>
+  <body>
     <Analytics />
-		<slot />
-	</body>
+    <slot />
+  </body>
 </html>
