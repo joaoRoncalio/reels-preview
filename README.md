@@ -1,6 +1,6 @@
 # Insta Reels Preview
 
-![Astro Badge](https://img.shields.io/badge/Astro-5.6.1-blueviolet)
+![Insta Reels Preview](/public/images/reels-preview-ogimage.webp)
 
 ## 📱 Sobre o Projeto
 
