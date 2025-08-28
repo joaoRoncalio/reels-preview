@@ -11,6 +11,7 @@ const { pageTitle } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
+    <meta property="og:url" content="https://reels.montefiorestudio.com" />
     <link
       rel="icon"
       type="image/png"
@@ -27,7 +28,10 @@ const { pageTitle } = Astro.props;
     <link rel="manifest" href="/images/site.webmanifest" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/images/reels-preview-ogimage.webp" />
+    <meta
+      property="og:image"
+      content="https://reels.montefiorestudio.com/images/reels-preview-ogimage.webp"
+    />
     <meta
       property="og:description"
       content="Veja como seus vídeos ficarão no Instagram Reels antes de publicar."
